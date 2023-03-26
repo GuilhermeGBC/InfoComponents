@@ -46,14 +46,22 @@ namespace SystemInfoExample
 
         public static Dictionary<string, string> GetInformations(string option)
         {
+            // Define a consulta WQL para obter informações sobre o componente.
             string query = $"{option}";
 
+            // Cria um objeto ManagementObjectSearcher com a consulta WQL.
             ManagementObjectSearcher searcher = new ManagementObjectSearcher(query);
+
+            // Executa a consulta e obtém a coleção de objetos ManagementObject resultantes.
             ManagementObjectCollection results = searcher.Get();
+
+            // Cria um Dictionary para armazenar as informações do processador/componentes.
             Dictionary<string, string> componentInfo = new Dictionary<string, string>();
 
+            // Itera através dos objetos de gerenciamento na coleção de resultados.
             foreach (ManagementObject obj in results)
-            {             
+            {
+                // Obtém as propriedades do objeto ManagementObject e as adiciona ao Dictionary.
                 foreach (PropertyData property in obj.Properties)
                 {
                     string value = property.Value != null ? property.Value.ToString() : "N/A";
